@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-
+var choices = require('./choice.json');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
@@ -8,24 +8,55 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
-var votes = {
-	'justin bieber': 0,
-	'one direction' : 0
+
+var votes = null;
+var start = function(i) {
+
+	// get random choices
+	var rand = Math.floor(Math.random() * choices.length);
+
+	votes = choices[rand];
+
+	// display choices
+	io.sockets.emit('votes', votes);
+
+	votes.left.total = 0;
+	votes.right.total = 0;
 };
 
+// interval function, changes choices every 3s
+setInterval(function(){
+	start();
+}, 3000);
+start();
+
 io.on('connection', function(socket){
-  console.log('a user connected');
-  socket.on('choice', function(what){
-    console.log('chosen: ' + what);
-  if (what === 'justin bieber'){
-  	votes['justin bieber']++;
-  } else { 
-  	votes['one direction']++;
-  }
-console.log(votes);
+	
+  // send all data
+  io.sockets.emit('votes', votes);
+
+    socket.on('choice', function(what){
+    console.log(what);
+    if (what === 'left') {
+      votes.left.total++;
+    } else {
+      votes.right.total++;
+    }
+    io.sockets.emit('total', votes);
+  });
+
+ socket.on('unchoice', function(what){
+    console.log('what');
+    if (what === 'left') {
+      votes.left.total--;
+    } else {
+      votes.right.total--;
+    }
+    io.sockets.emit('total', votes);
   });
 });
 
 http.listen(3000, function(){
   console.log('listening on *:3000');
 });
+

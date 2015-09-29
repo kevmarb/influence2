@@ -11,5 +11,27 @@
 			"src": "http://cdn-img.instyle.com/sites/default/files/styles/428xflex/public/images/2012/TRANSFORMATIONS/2009-Justin-Bieber-400_0.jpg?itok=oD8Yh7Ec",
 			"name": "justin bieber"
 		}
+	},
+	{
+		"uid": "a62efaba672",
+		"left": {
+			"src": "http://www.clg-daubigny-auvers.ac-versailles.fr/IMG/jpg/wolfgang-amadeus-mozart_1.jpg",
+			"name": "classique"
+		},
+		"right":{
+			"src": "http://www.mycontact.fr/public/actualite/Tomorrowland-festival-assur-pour-20-ans-100609.jpg",
+			"name": "electro"
+		}
+	},
+	{
+		"uid": "a62efaba672",
+		"left": {
+			"src": "http://www.naruto-mx.net/wp-content/uploads/2013/02/Naruto-4%C3%A8me-Vente-Shonen.jpg",
+			"name": "manga"
+		},
+		"right":{
+			"src": "http://www.observateurdescomores.com/wp-content/uploads/2015/08/Litte%CC%81rature.jpg",
+			"name": "litterature"
+		}
 	}
 ]

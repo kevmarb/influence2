@@ -10,47 +10,66 @@
     }
     img {
       cursor: pointer;
+      width: 200px;
+      border: 2px solid white;
+    }
+    img:hover {
+      border: 2px solid #f00;
     }
   </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 </head>
 <body>
   <h1>What is your favorite music ?</h1>
 
-  <div class="choice one">
-    <div class="">
-      <img src="http://blog.ticketmaster.co.uk/wp-content/uploads/2015/08/one-direction-split-2015.jpg" alt="one direction">
-    </div>
-   <span id="one_direction">One Direction</span> 
+  <div class="choice left">
+    <img>
+    <div class="caption"></div>
+    <div class="total"></div>
   </div>
-
-  <div class="choice two">
-    <div class="">
-      <img src="http://cdn-img.instyle.com/sites/default/files/styles/428xflex/public/images/2012/TRANSFORMATIONS/2009-Justin-Bieber-400_0.jpg?itok=oD8Yh7Ec" alt="justin bieber">
-    </div>
-    <span id="justin_bieber">Justin Bieber</span>
+  <div class="choice right">
+    <img>
+    <div class="caption"></div>
+    <div class="total"></div>
   </div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
 
 var socket = io();
-window.addEventListener('load', function () {
-  var choices = document.querySelectorAll('img');
-  for (var i = 0; i < choices.length; i++) {
-    choices[i].addEventListener('mouseover', function () {
-      var what = this.getAttribute('alt');
-      console.log(what);
-      socket.emit('choice', what);
-    });
-  }
-
+$(function () {
+  // detect mouse overs
+  $('.choice').on('mouseover', function () {
+    var what = 'left';
+    if($(this).hasClass('right')) {
+      what = 'right';
+    }
+    // tell the server
+    socket.emit('choice', what);
+  });
+  $('.choice').on('mouseout', function () {
+    var what = 'left';
+    if($(this).hasClass('right')) {
+      what = 'right';
+    }
+    // tell the server
+    socket.emit('unchoice', what);
+  });
 });
 
-socket.on('total', function(votes){
-  document.querySelector('#justin_bieber').innerHTML
-  document.querySelector('#one-direction').innerHTML
-})
 
+// update total
+socket.on('total', function (votes) {
+  $(".left .total").html(votes.left.total);
+  $(".right .total").html(votes.right.total);
+});
+// update the whole vote
+socket.on('votes', function (votes) {
+  $(".left img").prop('src', votes.left.src);
+  $(".left .caption").html(votes.left.name);
+  $(".right img").prop('src', votes.right.src);
+  $(".right .caption").html(votes.right.name);
+});
 </script>
 
 </body>
