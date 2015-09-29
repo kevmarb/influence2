@@ -20,14 +20,14 @@
     <div class="">
       <img src="http://blog.ticketmaster.co.uk/wp-content/uploads/2015/08/one-direction-split-2015.jpg" alt="one direction">
     </div>
-    One Direction
+   <span id="one_direction">One Direction</span> 
   </div>
 
   <div class="choice two">
     <div class="">
       <img src="http://cdn-img.instyle.com/sites/default/files/styles/428xflex/public/images/2012/TRANSFORMATIONS/2009-Justin-Bieber-400_0.jpg?itok=oD8Yh7Ec" alt="justin bieber">
     </div>
-    Justin
+    <span id="justin_bieber">Justin Bieber</span>
   </div>
 
 <script src="/socket.io/socket.io.js"></script>
@@ -46,9 +46,10 @@ window.addEventListener('load', function () {
 
 });
 
-socket.on('message', function(body){
-  console.log('from server' + body);
-});
+socket.on('total', function(votes){
+  document.querySelector('#justin_bieber').innerHTML
+  document.querySelector('#one-direction').innerHTML
+})
 
 </script>
 

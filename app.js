@@ -14,7 +14,6 @@ var votes = {
 };
 
 io.on('connection', function(socket){
-	socket.emit('message', 'welcome');
   console.log('a user connected');
   socket.on('choice', function(what){
     console.log('chosen: ' + what);
