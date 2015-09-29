@@ -1,5 +1,3 @@
-
-
 var express = require('express');
 var app = express();
 
@@ -10,10 +8,22 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
+var votes = {
+	'justin bieber': 0,
+	'one direction' : 0
+};
+
 io.on('connection', function(socket){
+	socket.emit('message', 'welcome');
   console.log('a user connected');
   socket.on('choice', function(what){
     console.log('chosen: ' + what);
+  if (what === 'justin bieber'){
+  	votes['justin bieber']++;
+  } else { 
+  	votes['one direction']++;
+  }
+console.log(votes);
   });
 });
 
