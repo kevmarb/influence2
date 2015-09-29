@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>music</title>
+  <style media="screen">
+    .choice {
+      float: left;
+      margin: 1em;
+    }
+    img {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>What is your favorite music ?</h1>
+
+  <div class="choice one">
+    <div class="">
+      <img src="http://blog.ticketmaster.co.uk/wp-content/uploads/2015/08/one-direction-split-2015.jpg" alt="one direction">
+    </div>
+    One Direction
+  </div>
+
+  <div class="choice two">
+    <div class="">
+      <img src="http://cdn-img.instyle.com/sites/default/files/styles/428xflex/public/images/2012/TRANSFORMATIONS/2009-Justin-Bieber-400_0.jpg?itok=oD8Yh7Ec" alt="justin bieber">
+    </div>
+    Justin
+  </div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+
+var socket = io();
+window.addEventListener('load', function () {
+  var choices = document.querySelectorAll('img');
+  for (var i = 0; i < choices.length; i++) {
+    choices[i].addEventListener('click', function () {
+      var what = this.getAttribute('alt');
+      console.log(what);
+      socket.emit('choice', what);
+    });
+  }
+
+});
+
+</script>
+
+</body>
+</html>
