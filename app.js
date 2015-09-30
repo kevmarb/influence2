@@ -10,21 +10,21 @@ app.get('/', function(req, res){
 
 
 var votes = null;
-var start = function(i) {
+var start = function() {
 
-	// get random choices
+	// random choice
 	var rand = Math.floor(Math.random() * choices.length);
 
 	votes = choices[rand];
 
-	// display choices
+
 	io.sockets.emit('votes', votes);
 
 	votes.left.total = 0;
 	votes.right.total = 0;
 };
 
-// interval function, changes choices every 3s
+// change influence all 3s
 setInterval(function(){
 	start();
 }, 3000);
